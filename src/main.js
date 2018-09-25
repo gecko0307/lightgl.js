@@ -11,8 +11,16 @@ var GL = {
   // canvas.
   create: function(options) {
     options = options || {};
-    //var canvas = document.createElement('canvas');
-    var canvas = options.canvas || document.createElement('canvas');
+    var canvas; //= options.canvas || document.createElement('canvas');
+	if (options.canvas) {
+		canvas = options.canvas;
+		gl.internalCanvas = false;
+	}
+	else {
+		canvas = document.createElement('canvas');
+		gl.internalCanvas = true;
+	}
+	
     canvas.width = options.width || 800;
     canvas.height = options.height || 600;
     if (!('alpha' in options)) options.alpha = false;
@@ -427,7 +435,7 @@ function addOtherMethods() {
       throw new Error('document.body doesn\'t exist yet (call gl.fullscreen() from ' +
         'window.onload() or from inside the <body> tag)');
     }
-    document.body.appendChild(gl.canvas);
+	if (gl.internalCanvas) document.body.appendChild(gl.canvas);
     document.body.style.overflow = 'hidden';
     gl.canvas.style.position = 'absolute';
     gl.canvas.style.left = left + 'px';
