@@ -11,16 +11,7 @@ var GL = {
   // canvas.
   create: function(options) {
     options = options || {};
-    var canvas; //= options.canvas || document.createElement('canvas');
-	if (options.canvas) {
-		canvas = options.canvas;
-		gl.internalCanvas = false;
-	}
-	else {
-		canvas = document.createElement('canvas');
-		gl.internalCanvas = true;
-	}
-	
+    var canvas = options.canvas || document.createElement('canvas');	
     canvas.width = options.width || 800;
     canvas.height = options.height || 600;
     if (!('alpha' in options)) options.alpha = false;
@@ -32,6 +23,8 @@ var GL = {
     addImmediateMode();
     addEventListeners();
     addOtherMethods();
+	//if (options.canvas) gl.internalCanvas = false;
+	//else gl.internalCanvas = true;
     return gl;
   },
 
@@ -435,7 +428,8 @@ function addOtherMethods() {
       throw new Error('document.body doesn\'t exist yet (call gl.fullscreen() from ' +
         'window.onload() or from inside the <body> tag)');
     }
-	if (gl.internalCanvas) document.body.appendChild(gl.canvas);
+	//if (gl.internalCanvas) 
+	document.body.appendChild(gl.canvas);
     document.body.style.overflow = 'hidden';
     gl.canvas.style.position = 'absolute';
     gl.canvas.style.left = left + 'px';
