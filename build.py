@@ -39,7 +39,7 @@ def build():
     if 'release' in sys.argv:
         f1, temp1_path = tempfile.mkstemp()
         f2, temp2_path = tempfile.mkstemp()
-        os.write(f1, data)
+        os.write(f1, data.encode('utf-8'))
         os.close(f1)
         os.close(f2)
         os.system('uglifyjs "%s" -mo "%s"' % (temp1_path, temp2_path))
@@ -49,7 +49,7 @@ def build():
         data = compress_glsl(data)
     data = header + data
     open(output_path, 'w').write(data)
-    print 'built %s (%u lines)' % (output_path, len(data.split('\n')))
+    print('built %s (%u lines)' % (output_path, len(data.split('\n'))))
 
 def stat():
     return [os.stat(file).st_mtime for file in sources()]
